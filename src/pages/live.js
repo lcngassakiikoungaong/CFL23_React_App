@@ -10,10 +10,15 @@ import "../css/live.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Live() {
-  const [showMenu, setShowMenu] = useState(false);
-  const hideMenu = () => {
-    setShowMenu(false);
-  };
+  var navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
   
   const [rows, setRows] = useState([]);
 
@@ -80,7 +85,7 @@ function Live() {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
         <section className="header">
                     <nav>
-                        <a href="index,js">
+                        <a href="./index.js">
                         <img src="" alt="" />
                         </a>
                         <div className={showMenu ? 'nav-links show-nav' : 'nav-links'}>

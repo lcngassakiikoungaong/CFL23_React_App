@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import Student1 from "../images/student1.png";
 import Student2 from "../images/student2.png";
@@ -6,19 +6,13 @@ import '../css/shared_css/navbar.css';
 import '../css/shared_css/footer.css';
 import '../css/about.css';
 /* eslint-disable jsx-a11y/anchor-is-valid */
-class About extends React.Component {
-    render() {
+function About() {
         //This is the JS code for the drop down menu on phone view
-
-        var navLinks = document.getElementById("navLinks");
-
-        function showMenu() {
-            navLinks.style.right = "0";
-        }
-
-        function hideMenu() {
-            navLinks.style.right = "-200px";
-        }
+        const [showMenu, setShowMenu] = useState(false);
+        
+        const toggleMenu = () => {
+            setShowMenu(!showMenu);
+          }
 
         //This is the end of the JS code for the drop down menu on phone view
         function showCFLpage() {
@@ -43,8 +37,7 @@ class About extends React.Component {
         }
 
         return(
-            <div>
-                <head>
+            <>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <title>CFL APP</title>
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -55,15 +48,16 @@ class About extends React.Component {
                     <link
                         rel="stylesheet"
                         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-                </head>
-                <body>
-                    <section className="header">
-                    <nav>
-                        <a href="index,js">
-                        <img src="" alt="" />
-                        </a>
-                        <div className={showMenu ? 'nav-links show-nav' : 'nav-links'}>
-                        <i className="fa-solid fa-square-xmark" onClick={hideMenu}></i>
+                
+                <section className="header">
+                <nav>
+                <a href="index.js">
+                    <img src="" alt="" />
+                </a>
+
+                <div className={showMenu ? 'nav-links show-nav' : 'nav-links'}>
+                    <i className="fa-solid fa-square-xmark" onClick={toggleMenu}></i>
+                
                         <ul>
                             <li>
                             <NavLink to="/index.js" id="homeNav">SUMMARY</NavLink>
@@ -201,10 +195,8 @@ class About extends React.Component {
                             <p>Made with <i className="fas fa-heart"></i> by CFL Team</p>
                         </section>
 
-                </body>
-            </div>
+                </>
         );
     }
-}
 
 export default About;
