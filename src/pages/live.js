@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../css/shared_css/navbar.css";
 import "../css/shared_css/footer.css";
@@ -20,38 +20,22 @@ function Live() {
             navLinks.style.right = "-200px";
         }
   
-  const [rows, setRows] = useState([]);
+        const [rows, setRows] = useState([]);
 
-  const onAddWebsite = (e) => {
-    e.preventDefault();
-    const cate = e.target.elements.Category.value;
-    const prdr = e.target.elements.Purchase.value;
-    const date = e.target.elements.Date.value;
-    const amnt = e.target.elements.Amount.value;
-
-    setRows([...rows, { cate, prdr, date, amnt }]);
-  };
-
-  const onDeleteRow = (index) => {
-    setRows(rows.filter((_, i) => i !== index));
-  };
-
-  useEffect(() => {
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = rows
-      .map(
-        (row, index) => `
-        <tr>
-          <td>${row.cate}</td>
-          <td>${row.prdr}</td>
-          <td>${row.date}</td>
-          <td>${row.amnt}</td>
-          <td><button onclick="onDeleteRow(${index})">Delete</button></td>
-        </tr>
-      `
-      )
-      .join("");
-  }, [rows]);
+        const onAddWebsite = (e) => {
+          e.preventDefault();
+          const cate = e.target.elements.Category.value;
+          const prdr = e.target.elements.Purchase.value;
+          const date = e.target.elements.Date.value;
+          const amnt = e.target.elements.Amount.value;
+      
+          setRows([...rows, { cate, prdr, date, amnt }]);
+        };
+      
+        const onDeleteRow = (index) => {
+          setRows(rows.filter((_, i) => i !== index));
+        };
+      
 
   // the is the functionalites for the social media icons
   const showFBpage = () => {
