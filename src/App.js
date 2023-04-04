@@ -1,28 +1,25 @@
-import About from "./pages/about.js";
-import Live from "./pages/live.js";
-import Owe from "./pages/owe.js";
-import Give from "./pages/give.js";
-import Grow from "./pages/grow.js";
-import Summary from "./pages/index.js";
-import Login from "./pages/login.js";
-import Register from "./pages/Register.js"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Summary from './pages/summary';
+import { Route, Routes } from "react-router-dom";
+import Live from './pages/live';
+import Give from './pages/give';
+import Grow from './pages/grow';
+import Owe from './pages/owe';
+import About from './pages/about';
+import LogSignin from './pages/login';
+
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register.js" element={<Register />} />
-          <Route path='/about.js' element={<About />} />
-          <Route path='/live.js' element={<Live />} />
-          <Route path='/owe.js' element={<Owe />} />
-          <Route path='/give.js' element={<Give />} />
-          <Route path='/grow.js' element={<Grow />} />
-          <Route path='/index.js' element={<Summary />} />
-        </Routes>
-      </Router>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<LogSignin />} />
+        <Route path='/summary' element={<Summary />} />
+        <Route path='/live' element={<Live />} />
+        <Route path='/give' element={<Give />} />
+        <Route path='/grow' element={<Grow />} />
+        <Route path='/owe' element={<Owe />} />
+        <Route path='/about' element={<About />} />
+      </Routes>
     </div>
   );
 }

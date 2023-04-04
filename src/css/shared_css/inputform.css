@@ -1,4 +1,4 @@
-.container {
+.containerL {
     max-width: 700px;
     width: 100%;
     padding: 25px 30px;
@@ -6,13 +6,13 @@
     margin: auto;
 }
 
-.container .title {
+.containerL .title {
     font-size: 25px;
     font-weight: 500;
     position: relative;
 }
 
-.container .title::before {
+.containerL .title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -22,7 +22,7 @@
     background: darkgoldenrod;
 }
 
-.container form .user-details {
+.containerL form .user-details {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -118,7 +118,7 @@ form .button input {
 }
 
 @media screen and (max-width: 700px) {
-    .container {
+    .containerL {
         max-width: 100%;
     }
 
@@ -131,11 +131,11 @@ form .button input {
         width: 100%;
     }
 
-    .container form .user-details {
+    .containerL form .user-details {
         max-height: 300px;
     }
 
-    .container form .user-details {
+    .containerL form .user-details {
         max-height: 300px;
         overflow-y: scroll;
     }
@@ -151,14 +151,14 @@ form .button input {
     padding-top: 50px;
 }
 
-.formContainer {
+.formcontainer {
     max-width: 300px;
     padding: 20px;
     background-color: #fff;
     margin: auto;
 }
 
-.formContainer input[type="text"],
+.formcontainer input[type="text"],
 input[type="date"] {
     text-align: left;
     display: block;
@@ -192,7 +192,7 @@ form a {
     cursor: pointer;
 }
 
-.formContainer .btn {
+.formcontainer .btn {
     padding: 12px 20px;
     border: auto;
     background-color: darkgoldenrod;
@@ -205,7 +205,7 @@ form a {
     position: CENTER;
 }
 
-.formContainer .btn:hover,
+.formcontainer .btn:hover,
 .openButton:hover {
     opacity: 1;
 }

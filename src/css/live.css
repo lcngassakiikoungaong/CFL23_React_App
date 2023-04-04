@@ -2,7 +2,7 @@ html {
   scroll-behavior: smooth;
 }
 
-.header {
+.headerlv {
   min-height: 100vh;
   width: 100%;
   /* Linear Gradient adds shading to the background picture */
