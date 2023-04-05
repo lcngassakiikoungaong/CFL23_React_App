@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../css/shared_css/inputform.css";
@@ -6,56 +6,84 @@ import "../css/shared_css/table.css";
 import "../css/shared_css/herobutton.css";
 import "../css/live.css";
 
-/*eslint-disable jsx-a11y/anchor-is-valid*/
+/*const dateInput = document.querySelector(".user-details .input-box input[type='date']");
 
-function Live() {
-  var navLinks = document.getElementById("navLinks");
+dateInput.addEventListener("click", function() {
+  this.classList.add("opened");
+});
 
-        function showMenu() {
-            navLinks.style.right = "0";
-        }
+const form = document.querySelector('form');
+const tbody = document.querySelector('tbody');
+const table = document.querySelector('table');
+const amnt = document.getElementsByName("Amount");
 
-        function hideMenu() {
-            navLinks.style.right = "-200px";
-        }
+
+//add $ sign to beginning of input
+amnt[0].addEventListener("focus", function()
+{
+    if(amnt[0].value.charAt(0) != '$'){
+        amnt[0].value = '$';
+    }   
+    
+});
+
+function onAddWebsite(e) {
+  e.preventDefault();
   
-        const [rows, setRows] = useState([]);
+  const cate = document.getElementsByName("Category")[0].value;
+  const prdr = document.getElementsByName("Purchase")[0].value;
+  const date = document.getElementsByName("Date")[0].value;
+  amnt[0].value = '$' + parseInt(amnt[0].value.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
+  let newAmnt = amnt[0].value;
 
-        const onAddWebsite = (e) => {
-          e.preventDefault();
-          const cate = e.target.elements.Category.value;
-          const prdr = e.target.elements.Purchase.value;
-          const date = e.target.elements.Date.value;
-          const amnt = e.target.elements.Amount.value;
-      
-          setRows([...rows, { cate, prdr, date, amnt }]);
-        };
-      
-        const onDeleteRow = (index) => {
-          setRows(rows.filter((_, i) => i !== index));
-        };
-      
+  //Session storage
+  let total = parseInt(sessionStorage.getItem("liveTotal") || 0);
+  sessionStorage.setItem("liveTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+  
+  tbody.innerHTML += `
+    <tr>
+      <td>${cate}</td>
+      <td>${prdr}</td>
+      <td>${date}</td>
+      <td>${newAmnt}</td>
+      <td><button class="deleteBtn">Delete</button></td>
+    </tr>
+  `;
+  sessionStorage.setItem("liveTableRows", tbody.innerHTML);
+}
 
-  // the is the functionalites for the social media icons
-  const showFBpage = () => {
-    window.location.href =
-      "https://www.facebook.com/groups/LibertyCFL/?_ga=2.101789572.488967955.1669654119-816072560.1565226602";
-  };
+function onDeleteRow(e) {
+  if (!e.target.classList.contains("deleteBtn")) {
+    return;
+  }
+  const btn = e.target;
+  btn.closest("tr").remove();
+  sessionStorage.setItem("liveTableRows", tbody.innerHTML);
+  
+  let total = parseInt(sessionStorage.getItem("liveTotal"));
+  total -= parseInt(btn.closest("tr").children[3].innerHTML.replace(/[$]|[,]/g, ''));
+  sessionStorage.setItem("liveTotal", total);
+}
 
-  const showTWpage = () => {
-    window.location.href =
-      "https://twitter.com/LibertyU_Busi?_ga=2.101985156.488967955.1669654119-816072560.1565226602";
-  };
+form.addEventListener("submit", onAddWebsite);
+table.addEventListener('click', onDeleteRow);
 
-  const showIGpage = () => {
-    window.location.href =
-      "https://www.instagram.com/lucenterforfinancialliteracy/?_ga=2.268035211.488967955.1669654119-816072560.1565226602";
-  };
+// here is the implementation for the div select.
 
-  const showLIpage = () => {
-    window.location.href =
-      "https://www.linkedin.com/company/center-for-financial-literacy-liberty-university/?viewAsMember=true";
-  };
+let dateBox = document.getElementById("dateBox");
+
+dateBox.addEventListener("click", function(){
+  
+})
+
+
+window.onload = function updateSession()
+{
+  tbody.innerHTML = sessionStorage.getItem("liveTableRows") || "";
+}
+
+*/
+function Live() {
 
   return (
     <>
@@ -135,7 +163,7 @@ function Live() {
                                       data-type="currency"
                                       placeholder="Enter the amount"
                                       name="Amount"
-                                      required />
+                                       />
                               </div>
                           </div>
                           <div className="button">

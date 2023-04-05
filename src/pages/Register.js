@@ -113,7 +113,7 @@ function Register() {
                                     <i class="bx bx-hide eye-icon"></i>
                                 </div>
                                 <div className="field button-field">
-                                    <NavLink to="./index.js" type="submit"><button type="button">Register</button></NavLink>
+                                    <NavLink to="./summary" type="submit"><button type="button">Register</button></NavLink>
                                 </div>
 
                                 <div className="form-link">
