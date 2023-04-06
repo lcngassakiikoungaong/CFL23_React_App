@@ -9,38 +9,41 @@ import "../css/grow.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Grow() {
-  const [rows, setRows] = useState([]);
+  let [total, setTotal] = useState(parseInt(sessionStorage.getItem("growTotal") || 0));
+        let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("growTableRows")) || []);
+    
+        let onAddWebsite = (e) => {
+        e.preventDefault();
+        let cate = e.target.elements.Category.value;
+        let prdr = e.target.elements.Purchase.value;
+        let date = e.target.elements.Date.value;
+        let amnt = e.target.elements.Amount.value;
+    
+        if (amnt.charAt(0) !== '$') {
+            amnt = '$' + amnt;
+        }
+    
+        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
+    
+        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("growTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+    
+        setRows([...rows, { cate, prdr, date, amnt }]);
+    
+        sessionStorage.setItem("growTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
+        };
+    
+        let onDeleteRow = (index) => {
+        let rowToDelete = rows[index];
+        let amntToDelete = rowToDelete.amnt;
+        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("growTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+    
+        let updatedRows = rows.filter((_, i) => i !== index);
+        setRows(updatedRows);
+        sessionStorage.setItem("growTableRows", JSON.stringify(updatedRows));
+        };
 
-  const onAddWebsite = (e) => {
-    e.preventDefault();
-    const cate = e.target.elements.Category.value;
-    const prdr = e.target.elements.Purchase.value;
-    const date = e.target.elements.Date.value;
-    const amnt = e.target.elements.Amount.value;
-
-    setRows([...rows, { cate, prdr, date, amnt }]);
-  };
-
-  const onDeleteRow = (index) => {
-    setRows(rows.filter((_, i) => i !== index));
-  };
-
-  useEffect(() => {
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = rows
-      .map(
-        (row, index) => `
-        <tr>
-          <td>${row.cate}</td>
-          <td>${row.prdr}</td>
-          <td>${row.date}</td>
-          <td>${row.amnt}</td>
-          <td><button onclick="onDeleteRow(${index})">Delete</button></td>
-        </tr>
-      `
-      )
-      .join("");
-  }, [rows]);
 return (
     <>
         <link
@@ -56,11 +59,11 @@ return (
         <section className='headergr'>
           <Navbar></Navbar>
 
-          <div class="text-box">
+          <div className="text-box">
             <h1>Grow</h1>
             <hr />
             <p>How much are you saving for emergencies or retirement?</p>
-            <a href="#form-header" class="hero-btn" id="libertyBtn"
+            <a href="#form-header" className="hero-btn" id="libertyBtn"
             >Click here to enter your investments</a>
           </div>
         </section>
@@ -70,9 +73,9 @@ return (
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
                     <div className="user-details">
-                    <div class="input-box">
-              <span class="details">Category</span>
-              <select class="input-box" name="Category" id="CategoryInput" required>
+                    <div className="input-box">
+              <span className="details">Category</span>
+              <select className="input-box" name="Category" id="CategoryInput" required>
                 <option disabled value selected>Select the category</option>
                 <option value="Emergency">Emergency Fund</option>
                 <option value="Retirement">Retirement Savings</option>
@@ -80,24 +83,24 @@ return (
               </select>
             </div>
       
-            <div class="input-box">
-              <span class="details">Description</span>
-              <input type="text" id="PurchaseInput" class="purchaseInput" placeholder="Enter the type of purchase"
+            <div className="input-box">
+              <span className="details">Description</span>
+              <input type="text" id="PurchaseInput" className="purchaseInput" placeholder="Enter the type of purchase"
                 name="Purchase" required />
             </div>
       
-            <div class="input-box">
-              <span class="details">Date</span>
-              <input type="date" id="DateInput" class="dateInput" placeholder="11/14/2022" name="Date" required />
+            <div className="input-box">
+              <span className="details">Date</span>
+              <input type="date" id="DateInput" className="dateInput" placeholder="11/14/2022" name="Date" required />
             </div>
       
-            <div class="input-box">
-              <span class="details">Amount</span>
-              <input type="text" id="AmountInput" class="amountInput" data-type="currency"
+            <div className="input-box">
+              <span className="details">Amount</span>
+              <input type="text" id="AmountInput" className="amountInput" data-type="currency"
                 placeholder="Enter the amount" name="Amount" required />
             </div>
           </div>
-          <div class="button">
+          <div className="button">
             <input type="submit" value="Submit" id="button" />
           </div>
         </form>
@@ -130,8 +133,8 @@ return (
                 </table>
             </section>
 
-        <section class="summary-link">
-          <a href="/summary" class="hero-btn gold-btn" id="LibertyBtn">
+        <section className="summary-link">
+          <a href="/summary" className="hero-btn gold-btn" id="LibertyBtn">
             Back to Summary
           </a>
         </section>

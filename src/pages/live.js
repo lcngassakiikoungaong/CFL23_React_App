@@ -9,22 +9,41 @@ import "../css/live.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Live() {  
-        const [rows, setRows] = useState([]);
-
-        const onAddWebsite = (e) => {
-          e.preventDefault();
-          const cate = e.target.elements.Category.value;
-          const prdr = e.target.elements.Purchase.value;
-          const date = e.target.elements.Date.value;
-          const amnt = e.target.elements.Amount.value;
-      
-          setRows([...rows, { cate, prdr, date, amnt }]);
+        let [total, setTotal] = useState(parseInt(sessionStorage.getItem("liveTotal") || 0));
+        let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("liveTableRows")) || []);
+    
+        let onAddWebsite = (e) => {
+        e.preventDefault();
+        let cate = e.target.elements.Category.value;
+        let prdr = e.target.elements.Purchase.value;
+        let date = e.target.elements.Date.value;
+        let amnt = e.target.elements.Amount.value;
+    
+        if (amnt.charAt(0) !== '$') {
+            amnt = '$' + amnt;
+        }
+    
+        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
+    
+        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("liveTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+    
+        setRows([...rows, { cate, prdr, date, amnt }]);
+    
+        sessionStorage.setItem("liveTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
         };
-      
-        const onDeleteRow = (index) => {
-          setRows(rows.filter((_, i) => i !== index));
+    
+        let onDeleteRow = (index) => {
+        let rowToDelete = rows[index];
+        let amntToDelete = rowToDelete.amnt;
+        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("liveTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+    
+        let updatedRows = rows.filter((_, i) => i !== index);
+        setRows(updatedRows);
+        sessionStorage.setItem("liveTableRows", JSON.stringify(updatedRows));
         };
-      
+       
 return (
     <>
               <link
@@ -123,11 +142,11 @@ return (
                 <tbody>
                     {rows.map((row, index) => (
                         <tr key={index}>
-                        <td>{row.cate}</td>
-                        <td>{row.prdr}</td>
-                        <td>{row.date}</td>
-                        <td>{row.amnt}</td>
-                        <td><button onClick={() => onDeleteRow(index)}>Delete</button></td>
+                            <td>{row.cate}</td>
+                            <td>{row.prdr}</td>
+                            <td>{row.date}</td>
+                            <td>{row.amnt}</td>
+                            <td><button onClick={() => onDeleteRow(index)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

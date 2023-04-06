@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../css/shared_css/inputform.css";
@@ -9,38 +9,40 @@ import "../css/owe.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Owe() {
-  const [rows, setRows] = useState([]);
-
-  const onAddWebsite = (e) => {
-    e.preventDefault();
-    const cate = e.target.elements.Category.value;
-    const prdr = e.target.elements.Purchase.value;
-    const date = e.target.elements.Date.value;
-    const amnt = e.target.elements.Amount.value;
-
-    setRows([...rows, { cate, prdr, date, amnt }]);
-  };
-
-  const onDeleteRow = (index) => {
-    setRows(rows.filter((_, i) => i !== index));
-  };
-
-  useEffect(() => {
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = rows
-      .map(
-        (row, index) => `
-        <tr>
-          <td>${row.cate}</td>
-          <td>${row.prdr}</td>
-          <td>${row.date}</td>
-          <td>${row.amnt}</td>
-          <td><button onclick="onDeleteRow(${index})">Delete</button></td>
-        </tr>
-      `
-      )
-      .join("");
-  }, [rows]);
+        let [total, setTotal] = useState(parseInt(sessionStorage.getItem("oweTotal") || 0));
+        let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("oweTableRows")) || []);
+    
+        let onAddWebsite = (e) => {
+        e.preventDefault();
+        let cate = e.target.elements.Category.value;
+        let prdr = e.target.elements.Purchase.value;
+        let date = e.target.elements.Date.value;
+        let amnt = e.target.elements.Amount.value;
+    
+        if (amnt.charAt(0) !== '$') {
+            amnt = '$' + amnt;
+        }
+    
+        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
+    
+        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("oweTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+    
+        setRows([...rows, { cate, prdr, date, amnt }]);
+    
+        sessionStorage.setItem("oweTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
+        };
+    
+        let onDeleteRow = (index) => {
+        let rowToDelete = rows[index];
+        let amntToDelete = rowToDelete.amnt;
+        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("oweTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+    
+        let updatedRows = rows.filter((_, i) => i !== index);
+        setRows(updatedRows);
+        sessionStorage.setItem("oweTableRows", JSON.stringify(updatedRows));
+        };
 
   return (
     <>
