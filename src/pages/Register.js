@@ -57,9 +57,7 @@ function Register() {
             <section className="container">
                 <div className="form login">
                     <div className="form-content">  
-                        <header>Register</header>
-                        <div className="form signup">
-                            <div className="form-content">
+                        <header>Register</header> 
                                 <form action="#">
                                 <div className="field input-field">
                                     <input
@@ -110,10 +108,10 @@ function Register() {
                                     onChange={handleConfirmPasswordChange}
                                     required
                                     />
-                                    <i class="bx bx-hide eye-icon"></i>
+                                    <i className="bx bx-hide eye-icon"></i>
                                 </div>
                                 <div className="field button-field">
-                                    <NavLink to="./index.js" type="submit"><button type="button">Register</button></NavLink>
+                                    <NavLink to="./summary" type="submit"><button type="button">Register</button></NavLink>
                                 </div>
 
                                 <div className="form-link">
@@ -122,8 +120,6 @@ function Register() {
                                 </form>
                             </div>
                         </div>
-                    </div>
-                </div>
             </section>
         </>
   );

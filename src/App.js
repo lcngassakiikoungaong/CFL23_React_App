@@ -6,6 +6,7 @@ import Grow from './pages/grow';
 import Owe from './pages/owe';
 import About from './pages/about';
 import LogSignin from './pages/login';
+import Register from './pages/Register';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <div className='App'>
       <Routes>
         <Route path='/' element={<LogSignin />} />
+        <Route path="/Register" element={<Register />} />
         <Route path='/summary' element={<Summary />} />
         <Route path='/live' element={<Live />} />
         <Route path='/give' element={<Give />} />

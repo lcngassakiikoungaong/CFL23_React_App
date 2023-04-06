@@ -177,8 +177,7 @@ select {
     padding: 5px;
 }
 
-input[type="submit"],
-form a {
+input[type="submit"] {
     border: none;
     margin: auto;
     padding: 6px;
@@ -191,6 +190,7 @@ form a {
     -webkit-box-shadow: 0 1px 0 white;
     cursor: pointer;
 }
+
 
 .formcontainer .btn {
     padding: 12px 20px;

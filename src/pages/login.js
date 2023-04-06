@@ -31,7 +31,7 @@ function Login() {
               <span><img src={LoadingLogo} alt="LoadingLogo" /></span>
             </div>
           ) : (
-            <div>
+            <>
                     <meta charSet="UTF-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,36 +46,33 @@ function Login() {
                     <section className="container">
                         <div className="form login">
                             <div className="form-content">
-                                
                                 <header>Login</header>
-
-
                                 <form action="#">
-                                <div className="field input-field">
-                                    <input type="email" placeholder="Email" className="input" value={email} onChange={(email) => setEmail(email)}/>
-                                </div>
+                                    <div className="field input-field">
+                                        <input type="email" placeholder="Email" className="input" value={email} onChange={(email) => setEmail(email)}/>
+                                    </div>
 
-                                <div className="field input-field">
-                                    <input type="password" placeholder="Password" className="password" value={password} onChange={(password) => setPassword(password)}/>
-                                    <i className="bx bx-hide eye-icon"></i>
-                                </div>
+                                    <div className="field input-field">
+                                        <input type="password" placeholder="Password" className="password" value={password} onChange={(password) => setPassword(password)}/>
+                                        <i className="bx bx-hide eye-icon"></i>
+                                    </div>
 
-                                <div class="form-link">
-                                <NavLink to=" " className="forgot-pass">Forgot password?</NavLink>
-                                </div>
+                                    <div className="form-link">
+                                    <NavLink to=" " className="forgot-pass">Forgot password?</NavLink>
+                                    </div>
 
-                                <div className="field button-field">
-                                    <NavLink to="./index.js"><button type="button">Login</button></NavLink>
-                                </div>
+                                    <div className="field button-field">
+                                        <NavLink to="./summary"><button type="button">Login</button></NavLink>
+                                    </div>
 
-                                <div className="form-link">
-                                    <span>Don't have an account? <Link to="/Register.js" className="link sign-up-link">Sign Up</Link></span>
-                                </div>
+                                    <div className="form-link">
+                                        <span>Don't have an account? <Link to="/Register" className="link sign-up-link">Sign Up</Link></span>
+                                    </div>
                                 </form>                           
                             </div>
                         </div>
                     </section>
-            </div>
+            </>
           )}
         </>
   );
