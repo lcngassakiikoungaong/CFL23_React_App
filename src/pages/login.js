@@ -60,7 +60,10 @@ function Login() {
             </div>
           ) : (
             <>
+<<<<<<< HEAD
                 <head>
+=======
+>>>>>>> 2239e32e53fc376ecc6c42f5e5f87a77312a7064
                     <meta charSet="UTF-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -75,11 +78,9 @@ function Login() {
                     <section className="container fomrs">
                         <div className="form login">
                             <div className="form-content">
-                                
                                 <header>Login</header>
-
-
                                 <form action="#">
+<<<<<<< HEAD
                                 <div className="field input-field">
                                     <input type="email" placeholder="Email" className="input"/>
                                 </div>
@@ -100,6 +101,28 @@ function Login() {
                                 <div className="form-link">
                                     <span>Don't have an account? <a href="#" className="link sign-up-link">Sign Up</a></span>
                                 </div>
+=======
+                                    <div className="field input-field">
+                                        <input type="email" placeholder="Email" className="input" value={email} onChange={(email) => setEmail(email)}/>
+                                    </div>
+
+                                    <div className="field input-field">
+                                        <input type="password" placeholder="Password" className="password" value={password} onChange={(password) => setPassword(password)}/>
+                                        <i className="bx bx-hide eye-icon"></i>
+                                    </div>
+
+                                    <div className="form-link">
+                                    <NavLink to=" " className="forgot-pass">Forgot password?</NavLink>
+                                    </div>
+
+                                    <div className="field button-field">
+                                        <NavLink to="./summary"><button type="button">Login</button></NavLink>
+                                    </div>
+
+                                    <div className="form-link">
+                                        <span>Don't have an account? <Link to="/Register" className="link sign-up-link">Sign Up</Link></span>
+                                    </div>
+>>>>>>> 2239e32e53fc376ecc6c42f5e5f87a77312a7064
                                 </form>                           
                             </div>
                         </div>
@@ -134,7 +157,10 @@ function Login() {
                                   </div>
                               </div>
                     </section>
+<<<<<<< HEAD
                 </body>
+=======
+>>>>>>> 2239e32e53fc376ecc6c42f5e5f87a77312a7064
             </>
           )}
         </>

@@ -13,6 +13,7 @@ function hideMenu() {
 }
 
 function Navbar() {
+
     return (
         <>
         <head>
@@ -30,7 +31,6 @@ function Navbar() {
         <nav>
             <Link href="/summary"><img src=""/></Link>
             <div className="nav-links" id="navLinks">
-                <i className="fa-solid fa-square-xmark" onClick={() => hideMenu()}></i>
                 <ul>
                     <li><Link to="/summary" id="homeNav">SUMMARY</Link></li>
                     <li><Link to="/live" id="liveNav">LIVE</Link></li>
@@ -40,7 +40,6 @@ function Navbar() {
                     <li><Link to="/about" id="homeNav">ABOUT</Link></li>
                 </ul>
             </div>
-            <i className="fa-solid fa-bars" onClick={() => showMenu()}></i>
         </nav>
         </>
     );
