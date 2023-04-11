@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import "../css/shared_css/inputform.css";
@@ -44,6 +44,12 @@ function Grow() {
         sessionStorage.setItem("growTableRows", JSON.stringify(updatedRows));
         };
 
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
+
 return (
     <>
         <link
@@ -73,10 +79,17 @@ return (
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
                     <div className="user-details">
-                    <div className="input-box">
-              <span className="details">Category</span>
-              <select className="input-box" name="Category" id="CategoryInput" required>
-                <option disabled value selected>Select the category</option>
+              <div className="input-box">
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
                 <option value="Emergency">Emergency Fund</option>
                 <option value="Retirement">Retirement Savings</option>
                 <option value="Miscellaneous">Miscellaneous</option>

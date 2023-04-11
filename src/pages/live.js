@@ -43,6 +43,12 @@ function Live() {
         setRows(updatedRows);
         sessionStorage.setItem("liveTableRows", JSON.stringify(updatedRows));
         };
+
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
        
 return (
     <>
@@ -72,11 +78,18 @@ return (
                 <h1 id="form-header" className="form-header">Enter your Expenses</h1>
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
-                    <div className="user-details">
+                        <div className="user-details">
                         <div className="input-box">
-                        <span className="details">Category</span>
-                        <select className="input-box" name="Category" id="CategoryInput" required>
-                            <option disabled value selected>Select the category</option>
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
                             <option value="Food">Food</option>
                             <option value="Housing">Housing</option>
                             <option value="Insurance">Insurance</option>
@@ -84,9 +97,9 @@ return (
                             <option value="Entertainment">Entertainment</option>
                             <option value="Personal">Personal Spending</option>
                             <option value="Miscellaneous">Miscellaneous</option>
-                        </select>
+                            </select>
                         </div>
-        
+                        
                         <div className="input-box">
                             <span className="details">Description</span>
                             <input
