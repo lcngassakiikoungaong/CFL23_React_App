@@ -59,10 +59,10 @@ function Summary() {
     /****Update Page Session Values on Refresh ****/
     let updateSession = () => {
         //Update Live, Give, Grow, Owe values
-        let l_sum = parseInt(sessionStorage.getItem("liveTotal") || 0);
-        let g_sum = parseInt(sessionStorage.getItem("giveTotal") || 0);
-        let gr_sum = parseInt(sessionStorage.getItem("growTotal") || 0);
-        let o_sum = parseInt(sessionStorage.getItem("oweTotal") || 0);
+        l_sum = parseInt(sessionStorage.getItem("liveTotal") || 0);
+        g_sum = parseInt(sessionStorage.getItem("giveTotal") || 0);
+        gr_sum = parseInt(sessionStorage.getItem("growTotal") || 0);
+        o_sum = parseInt(sessionStorage.getItem("oweTotal") || 0);
     
         setLiveSum(l_sum);
         setGiveSum(g_sum);
@@ -123,7 +123,7 @@ function Summary() {
       };
     
       let incomeInput = () => {
-        let income_int = incomeValue.replace(/[^0-9.]/g, '');
+        let income_int = (incomeValue || '').replace(/[^0-9.]/g, '');
 
         taxValue = calcTax(income_int);
 
@@ -170,8 +170,8 @@ function Summary() {
           }, []);
           
         function animateBar(i_sum, l_sum, g_sum, gr_sum, o_sum) {
-                let progressValue = progressValueRef.current;
-                let circularProgress =  circularProgressRef.current;
+                let progressValue = (progressValueRef || '').current;
+                let circularProgress =  (circularProgressRef || '').current;
                 let marginValue = i_sum - l_sum - g_sum - gr_sum - o_sum;
             
                 let fontSize = 40; //Handles font size if number gets too large
@@ -346,8 +346,8 @@ function Summary() {
             window.addEventListener("scroll", function() {
               let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
           
-              const canvas = canvasRef.current;
-              const chartError = chartErrorRef.current;
+              let canvas = (canvasRef || '').current;
+              let chartError = (chartErrorRef || '').current;
           
               if (chartDisplayed && scrollTop < 200) {
                 chartDisplayed = false;
