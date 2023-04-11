@@ -44,6 +44,12 @@ function Owe() {
         sessionStorage.setItem("oweTableRows", JSON.stringify(updatedRows));
         };
 
+
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
   return (
     <>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,10 +76,17 @@ function Owe() {
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
                     <div className="user-details">
-                        <div className="input-box">
-                        <span className="details">Category</span>
-                        <select className="input-box" name="Category" id="CategoryInput" required>
-                          <option disabled value selected>Select the category</option>
+                    <div className="input-box">
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
                           <option value="Student">Student Loans</option>
                           <option value="Credit">Credit Cards</option>
                           <option value="Federal">Federal Tax</option>

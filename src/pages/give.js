@@ -43,6 +43,12 @@ function Give() {
         setRows(updatedRows);
         sessionStorage.setItem("giveTableRows", JSON.stringify(updatedRows));
         };
+
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
 return (
     <>
         <link
@@ -73,9 +79,16 @@ return (
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
                     <div className="user-details">
                     <div className="input-box">
-              <span className="details">Category</span>
-              <select className="input-box" name="Category" id="CategoryInput" required>
-                <option disabled value selected>Select the category</option>
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
                 <option value="Tithing">Tithing</option>
                 <option value="Charity">Charity</option>
                 <option value="Miscellaneous">Miscellaneous</option>
