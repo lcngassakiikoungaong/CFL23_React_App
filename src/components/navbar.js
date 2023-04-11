@@ -1,8 +1,9 @@
-import React from "react";
+import React  from "react";
 import "../css/shared_css/navbar.css";
 import { Link } from 'react-router-dom';
 
-var navLinks = document.getElementById("navLinks");
+
+let navLinks = document.getElementById("navLinks");
 
 function showMenu() {
     navLinks.style.right = "0";
@@ -31,6 +32,7 @@ function Navbar() {
         <nav>
             <Link href="/summary"><img src=""/></Link>
             <div className="nav-links" id="navLinks">
+                <i className="fa-solid fa-square-xmark"></i>
                 <ul>
                     <li><Link to="/summary" id="homeNav">SUMMARY</Link></li>
                     <li><Link to="/live" id="liveNav">LIVE</Link></li>
@@ -39,6 +41,7 @@ function Navbar() {
                     <li><Link to="/owe" id="oweNav">OWE</Link></li>
                     <li><Link to="/about" id="homeNav">ABOUT</Link></li>
                 </ul>
+                <i className="fa-solid fa-bars"></i>
             </div>
         </nav>
         </>
