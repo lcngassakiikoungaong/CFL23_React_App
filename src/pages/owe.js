@@ -44,6 +44,12 @@ function Owe() {
     sessionStorage.setItem("oweTableRows", JSON.stringify(updatedRows));
   };
 
+
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
   return (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -65,63 +71,70 @@ function Owe() {
         </div>
       </section>
 
-      <section>
-        <h1 id="form-header" className="form-header">Enter your Expenses</h1>
-        <div className="containerL" id='containerL'>
-          <form action="#" method="POST" onSubmit={onAddWebsite}>
-            <div className="user-details">
-              <div className="input-box">
-                <span className="details">Category</span>
-                <select className="input-box" name="Category" id="CategoryInput" required>
-                  <option disabled value selected>Select the category</option>
-                  <option value="Student">Student Loans</option>
-                  <option value="Credit">Credit Cards</option>
-                  <option value="Federal">Federal Tax</option>
-                  <option value="State">State Tax</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <div className="input-box">
-                <span className="details">Description</span>
-                <input
-                  type="text"
-                  id="PurchaseInput"
-                  className="purchaseInput"
-                  placeholder="Enter the type of purchase"
-                  name="Purchase"
-                  required />
-              </div>
-
-              <div className="input-box" id="dateBox">
-                <span className="details">Date</span>
-                <input
-                  type="date"
-                  id="DateInput"
-                  className="dateInput"
-                  placeholder="11/14/2022"
-                  name="Date"
-                  required />
-              </div>
-
-              <div className="input-box">
-                <span className="details">Amount</span>
-                <input
-                  type="text"
-                  id="AmountInput"
-                  className="amountInput"
-                  data-type="currency"
-                  placeholder="Enter the amount"
-                  name="Amount"
-                  required />
-              </div>
-            </div>
-            <div className="button">
-              <input type="submit" value="Submit" id="button" />
-            </div>
-          </form>
-        </div>
-      </section>
+        <section>
+                <h1 id="form-header" className="form-header">Enter your Expenses</h1>
+                <div className="containerL" id='containerL'>
+                    <form action="#" method="POST" onSubmit={onAddWebsite}>
+                    <div className="user-details">
+                    <div className="input-box">
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
+                          <option value="Student">Student Loans</option>
+                          <option value="Credit">Credit Cards</option>
+                          <option value="Federal">Federal Tax</option>
+                          <option value="State">State Tax</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        </div>
+        
+                        <div className="input-box">
+                            <span className="details">Description</span>
+                            <input
+                            type="text"
+                            id="PurchaseInput"
+                            className="purchaseInput"
+                            placeholder="Enter the type of purchase"
+                            name="Purchase"
+                            required/>
+                        </div>
+                    
+                        <div className="input-box" id="dateBox">
+                            <span className="details">Date</span>
+                            <input
+                            type="date"
+                            id="DateInput"
+                            className="dateInput"
+                            placeholder="11/14/2022"
+                            name="Date"
+                            required/>
+                        </div>
+                    
+                        <div className="input-box">
+                            <span className="details">Amount</span>
+                            <input
+                            type="text"
+                            id="AmountInput"
+                            className="amountInput"
+                            data-type="currency"
+                            placeholder="Enter the amount"
+                            name="Amount"
+                            required />
+                        </div>
+                    </div>
+                    <div className="button">
+                        <input type="submit" value="Submit" id="button" />
+                    </div>
+                    </form>
+                </div>
+            </section>
 
       <section>
         <table id="tbl" className="table">

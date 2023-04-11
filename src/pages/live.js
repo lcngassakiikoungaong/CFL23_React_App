@@ -42,19 +42,25 @@ function Live() {
         let updatedRows = rows.filter((_, i) => i !== index);
         setRows(updatedRows);
         sessionStorage.setItem("liveTableRows", JSON.stringify(updatedRows));
-    };
+        };
 
-    return (
-        <>
-            <link
-                href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
-                rel="stylesheet"
-            />
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-            />
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
+       
+return (
+    <>
+              <link
+                  href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+                  rel="stylesheet"
+              />
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link
+                  rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+              />
 
             <section className='headerlv'>
                 <Navbar></Navbar>
@@ -73,57 +79,64 @@ function Live() {
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
                         <div className="user-details">
-                            <div className="input-box">
-                                <span className="details">Category</span>
-                                <select className="input-box" name="Category" id="CategoryInput" required>
-                                    <option disabled value selected>Select the category</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Housing">Housing</option>
-                                    <option value="Insurance">Insurance</option>
-                                    <option value="Transportation">Transportation</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Personal">Personal Spending</option>
-                                    <option value="Miscellaneous">Miscellaneous</option>
-                                </select>
-                            </div>
-
-                            <div className="input-box">
-                                <span className="details">Description</span>
-                                <input
-                                    type="text"
-                                    id="PurchaseInput"
-                                    className="purchaseInput"
-                                    placeholder="Enter the type of purchase"
-                                    name="Purchase"
-                                    required />
-                            </div>
-
-                            <div className="input-box" id="dateBox">
-                                <span className="details">Date</span>
-                                <input
-                                    type="date"
-                                    id="DateInput"
-                                    className="dateInput"
-                                    placeholder="11/14/2022"
-                                    name="Date"
-                                    required />
-                            </div>
-
-                            <div className="input-box">
-                                <span className="details">Amount</span>
-                                <input
-                                    type="text"
-                                    id="AmountInput"
-                                    className="amountInput"
-                                    data-type="currency"
-                                    placeholder="Enter the amount"
-                                    name="Amount"
-                                    required />
-                            </div>
+                        <div className="input-box">
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
+                            <option value="Food">Food</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Insurance">Insurance</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Personal">Personal Spending</option>
+                            <option value="Miscellaneous">Miscellaneous</option>
+                            </select>
                         </div>
-                        <div className="button">
-                            <input type="submit" value="Submit" id="button" />
+                        
+                        <div className="input-box">
+                            <span className="details">Description</span>
+                            <input
+                            type="text"
+                            id="PurchaseInput"
+                            className="purchaseInput"
+                            placeholder="Enter the type of purchase"
+                            name="Purchase"
+                            required/>
                         </div>
+                    
+                        <div className="input-box" id="dateBox">
+                            <span className="details">Date</span>
+                            <input
+                            type="date"
+                            id="DateInput"
+                            className="dateInput"
+                            placeholder="11/14/2022"
+                            name="Date"
+                            required/>
+                        </div>
+                    
+                        <div className="input-box">
+                            <span className="details">Amount</span>
+                            <input
+                            type="text"
+                            id="AmountInput"
+                            className="amountInput"
+                            data-type="currency"
+                            placeholder="Enter the amount"
+                            name="Amount"
+                            required />
+                        </div>
+                    </div>
+                    <div className="button">
+                        <input type="submit" value="Submit" id="button" />
+                    </div>
                     </form>
                 </div>
             </section>

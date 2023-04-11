@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import "../css/shared_css/inputform.css";
@@ -44,7 +44,13 @@ function Grow() {
     sessionStorage.setItem("growTableRows", JSON.stringify(updatedRows));
   };
 
-  return (
+        let [category, setCategory] = useState('');
+
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
+
+return (
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
@@ -68,44 +74,51 @@ function Grow() {
         </div>
       </section>
 
-      <section>
-        <h1 id="form-header" className="form-header">Enter your Expenses</h1>
-        <div className="containerL" id='containerL'>
-          <form action="#" method="POST" onSubmit={onAddWebsite}>
-            <div className="user-details">
+        <section>
+                <h1 id="form-header" className="form-header">Enter your Expenses</h1>
+                <div className="containerL" id='containerL'>
+                    <form action="#" method="POST" onSubmit={onAddWebsite}>
+                    <div className="user-details">
               <div className="input-box">
-                <span className="details">Category</span>
-                <select className="input-box" name="Category" id="CategoryInput" required>
-                  <option disabled value selected>Select the category</option>
-                  <option value="Emergency">Emergency Fund</option>
-                  <option value="Retirement">Retirement Savings</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-              </div>
-
-              <div className="input-box">
-                <span className="details">Description</span>
-                <input type="text" id="PurchaseInput" className="purchaseInput" placeholder="Enter the type of purchase"
-                  name="Purchase" required />
-              </div>
-
-              <div className="input-box">
-                <span className="details">Date</span>
-                <input type="date" id="DateInput" className="dateInput" placeholder="11/14/2022" name="Date" required />
-              </div>
-
-              <div className="input-box">
-                <span className="details">Amount</span>
-                <input type="text" id="AmountInput" className="amountInput" data-type="currency"
-                  placeholder="Enter the amount" name="Amount" required />
-              </div>
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
+                <option value="Emergency">Emergency Fund</option>
+                <option value="Retirement">Retirement Savings</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+              </select>
             </div>
-            <div className="button">
-              <input type="submit" value="Submit" id="button" />
+      
+            <div className="input-box">
+              <span className="details">Description</span>
+              <input type="text" id="PurchaseInput" className="purchaseInput" placeholder="Enter the type of purchase"
+                name="Purchase" required />
             </div>
-          </form>
-        </div>
-      </section>
+      
+            <div className="input-box">
+              <span className="details">Date</span>
+              <input type="date" id="DateInput" className="dateInput" placeholder="11/14/2022" name="Date" required />
+            </div>
+      
+            <div className="input-box">
+              <span className="details">Amount</span>
+              <input type="text" id="AmountInput" className="amountInput" data-type="currency"
+                placeholder="Enter the amount" name="Amount" required />
+            </div>
+          </div>
+          <div className="button">
+            <input type="submit" value="Submit" id="button" />
+          </div>
+        </form>
+      </div>
+    </section>
 
 
       <section>

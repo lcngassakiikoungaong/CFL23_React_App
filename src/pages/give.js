@@ -10,40 +10,46 @@ import "../css/give.css";
 
 function Give() {
   let [total, setTotal] = useState(parseInt(sessionStorage.getItem("giveTotal") || 0));
-  let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("giveTableRows")) || []);
+        let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("giveTableRows")) || []);
+    
+        let onAddWebsite = (e) => {
+        e.preventDefault();
+        let cate = e.target.elements.Category.value;
+        let prdr = e.target.elements.Purchase.value;
+        let date = e.target.elements.Date.value;
+        let amnt = e.target.elements.Amount.value;
+    
+        if (amnt.charAt(0) !== '$') {
+            amnt = '$' + amnt;
+        }
+    
+        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
+    
+        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("giveTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
+    
+        setRows([...rows, { cate, prdr, date, amnt }]);
+    
+        sessionStorage.setItem("giveTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
+        };
+    
+        let onDeleteRow = (index) => {
+        let rowToDelete = rows[index];
+        let amntToDelete = rowToDelete.amnt;
+        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+        sessionStorage.setItem("giveTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
+    
+        let updatedRows = rows.filter((_, i) => i !== index);
+        setRows(updatedRows);
+        sessionStorage.setItem("giveTableRows", JSON.stringify(updatedRows));
+        };
 
-  let onAddWebsite = (e) => {
-    e.preventDefault();
-    let cate = e.target.elements.Category.value;
-    let prdr = e.target.elements.Purchase.value;
-    let date = e.target.elements.Date.value;
-    let amnt = e.target.elements.Amount.value;
+        let [category, setCategory] = useState('');
 
-    if (amnt.charAt(0) !== '$') {
-      amnt = '$' + amnt;
-    }
-
-    let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
-
-    setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-    sessionStorage.setItem("giveTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-
-    setRows([...rows, { cate, prdr, date, amnt }]);
-
-    sessionStorage.setItem("giveTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
-  };
-
-  let onDeleteRow = (index) => {
-    let rowToDelete = rows[index];
-    let amntToDelete = rowToDelete.amnt;
-    setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-    sessionStorage.setItem("giveTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-
-    let updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
-    sessionStorage.setItem("giveTableRows", JSON.stringify(updatedRows));
-  };
-  return (
+        let handleCategoryChange = (event) => {
+            setCategory(event.target.value);
+        };
+return (
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
@@ -67,44 +73,51 @@ function Give() {
         </div>
       </section>
 
-      <section>
-        <h1 id="form-header" className="form-header">Enter your Expenses</h1>
-        <div className="containerL" id='containerL'>
-          <form action="#" method="POST" onSubmit={onAddWebsite}>
-            <div className="user-details">
-              <div className="input-box">
-                <span className="details">Category</span>
-                <select className="input-box" name="Category" id="CategoryInput" required>
-                  <option disabled value selected>Select the category</option>
-                  <option value="Tithing">Tithing</option>
-                  <option value="Charity">Charity</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-              </div>
-
-              <div className="input-box">
-                <span className="details">Description</span>
-                <input type="text" id="PurchaseInput" className="purchaseInput" placeholder="Enter the type of purchase"
-                  name="Purchase" required />
-              </div>
-
-              <div className="input-box">
-                <span className="details">Date</span>
-                <input type="date" id="DateInput" className="dateInput" placeholder="11/14/2022" name="Date" required />
-              </div>
-
-              <div className="input-box">
-                <span className="details">Amount</span>
-                <input type="text" id="AmountInput" className="amountInput" data-type="currency"
-                  placeholder="Enter the amount" name="Amount" required />
-              </div>
+        <section>
+                <h1 id="form-header" className="form-header">Enter your Expenses</h1>
+                <div className="containerL" id='containerL'>
+                    <form action="#" method="POST" onSubmit={onAddWebsite}>
+                    <div className="user-details">
+                    <div className="input-box">
+                            <label htmlFor="categoryInput">Category</label>
+                            <select
+                            className="input-box"
+                            name="Category"
+                            id="categoryInput"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            required
+                            >
+                            <option value="">Select the category</option>
+                <option value="Tithing">Tithing</option>
+                <option value="Charity">Charity</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+              </select>
             </div>
-            <div className="button">
-              <input type="submit" value="Submit" id="button" />
+      
+            <div className="input-box">
+              <span className="details">Description</span>
+              <input type="text" id="PurchaseInput" className="purchaseInput" placeholder="Enter the type of purchase"
+                name="Purchase" required />
             </div>
-          </form>
-        </div>
-      </section>
+      
+            <div className="input-box">
+              <span className="details">Date</span>
+              <input type="date" id="DateInput" className="dateInput" placeholder="11/14/2022" name="Date" required />
+            </div>
+      
+            <div className="input-box">
+              <span className="details">Amount</span>
+              <input type="text" id="AmountInput" className="amountInput" data-type="currency"
+                placeholder="Enter the amount" name="Amount" required />
+            </div>
+          </div>
+          <div className="button">
+            <input type="submit" value="Submit" id="button" />
+          </div>
+        </form>
+      </div>
+    </section>
 
       <section>
         <table id="tbl" className="table">
