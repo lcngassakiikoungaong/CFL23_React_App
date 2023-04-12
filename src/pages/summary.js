@@ -178,16 +178,16 @@ function Summary() {
                 let tmp = marginValue.toString().length;
                 if (tmp < 6) {
                 fontSize = 40;
-                progressValue.style.fontSize = fontSize + "px";
+                (progressValue || '').style.fontSize = fontSize + "px";
                 } else if (tmp >= 6 && tmp < 8) {
                 fontSize = 35;
-                progressValue.style.fontSize = fontSize + "px";
+                (progressValue || '').style.fontSize = fontSize + "px";
                 } else if (tmp >= 8 && tmp < 10) {
                 fontSize = 30;
-                progressValue.style.fontSize = fontSize + "px";
+                (progressValue || '').style.fontSize = fontSize + "px";
                 } else if (tmp >= 10) {
                 fontSize = 20;
-                progressValue.style.fontSize = fontSize + "px";
+                (progressValue || '').style.fontSize = fontSize + "px";
                 }
             
                 let progressStart = 0;
@@ -203,7 +203,7 @@ function Summary() {
                 if (marginValue <= 0) {
                 progressStart = 0;
                 progressValue.textContent = "$" + marginValue.toLocaleString("en-US");
-                circularProgress.style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`;
+                (circularProgress || '').style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`;
                 } else {
                 let progress = setInterval(() => {
                     progressStart++;
@@ -213,7 +213,7 @@ function Summary() {
                     marginCount = marginValue;
                     }
                     progressValue.textContent = '$' + marginCount.toLocaleString("en-US");
-                    circularProgress.style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`; /*multiply by 3.6 as 1% of 360 = 3.6 --> dont change*/
+                    (circularProgress || '').style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`; /*multiply by 3.6 as 1% of 360 = 3.6 --> dont change*/
             
                     if (progressStart >= progressEnd) {
                     clearInterval(progress);
