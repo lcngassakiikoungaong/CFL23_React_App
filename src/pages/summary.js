@@ -3,22 +3,34 @@ import Chart from "chart.js/auto";
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import "../css/summary.css";
+import { renderIntoDocument } from "react-dom/test-utils";
 
 function Summary() {
+    //Finance bar DOM container
     let live_barRef = useRef(null);
     let owe_barRef = useRef(null);
     let give_barRef = useRef(null);
     let grow_barRef = useRef(null);
 
-    let [live_sum, setLiveSum] = useState(0);
-    let [give_sum, setGiveSum] = useState(0);
-    let [grow_sum, setGrowSum] = useState(0);
-    let [owe_sum, setOweSum] = useState(0);
-
+    //Finance bar <h2> text container DOM refs
     let live_sumRef = useRef(null);
     let give_sumRef = useRef(null);
     let grow_sumRef = useRef(null);
     let owe_sumRef = useRef(null);
+
+    //Variables for the summary finance bar values
+    let [live_sum, setLiveSum] = useState(parseFloat(sessionStorage.getItem("liveTotal") || 0));
+    let [give_sum, setGiveSum] = useState(parseFloat(sessionStorage.getItem("giveTotal") || 0));
+    let [grow_sum, setGrowSum] = useState(parseFloat(sessionStorage.getItem("growTotal") || 0));
+    let [owe_sum, setOweSum] = useState(parseFloat(sessionStorage.getItem("oweTotal") || 0));
+
+    //Progress bar DOM Refs
+    let circularProgressRef = useRef(null);
+    let progressValueRef = useRef(null);
+    let income_inputRef = useRef(null);
+    let after_tax_divRef = useRef(null);
+    let [afterTaxNum, setAfterTaxNum] = useState(parseFloat(sessionStorage.getItem("after_tax_num") || 0));
+    let [incomeValue, setIncomeValue] = useState(parseFloat(sessionStorage.getItem("income_value")) || '');
 
     /** Links to other pages ***/
     useEffect(() => {
@@ -39,106 +51,72 @@ function Summary() {
         });
     }, [live_barRef, give_barRef, grow_barRef, owe_barRef]);
 
-    let circularProgressRef = useRef(null);
-    let progressValueRef = useRef(null);
-    let income_inputRef = useRef(null);
-
-    let [taxValue, setTaxValue] = useState(0);
-    let after_taxRef = useRef(null);
-    let after_tax_numRef = useRef(null);
-    let [i_sum, setISum] = useState(' ');
-    let [l_sum, setLSum] = useState(0);
-    let [g_sum, setGSum] = useState(0);
-    let [gr_sum, setGrSum] = useState(0);
-    let [o_sum, setOSum] = useState(0);
-
-    let total_expenses_numRef = useRef(null);
-    let [incomeValue, setIncomeValue] = useState('');
 
 
     /****Update Page Session Values on Refresh ****/
     let updateSession = () => {
-        //Update Live, Give, Grow, Owe values
-        l_sum = parseInt(sessionStorage.getItem("liveTotal") || 0);
-        g_sum = parseInt(sessionStorage.getItem("giveTotal") || 0);
-        gr_sum = parseInt(sessionStorage.getItem("growTotal") || 0);
-        o_sum = parseInt(sessionStorage.getItem("oweTotal") || 0);
-    
-        setLiveSum(l_sum);
-        setGiveSum(g_sum);
-        setGrowSum(gr_sum);
-        setOweSum(o_sum);
 
-    
-        //Update income value
-        let income_value = sessionStorage.getItem("income_value");
-        incomeValue = income_value;
         incomeInput();
-    
-        
-        //Update Pie Chart
-        let yValues = [l_sum || 0, g_sum || 0, gr_sum || 0, o_sum || 0];
 
-        setExpenseTotal(l_sum + g_sum + gr_sum + o_sum);
-        
-        //Update DOM elements
-        live_sumRef.current.textContent = `$${l_sum.toLocaleString('en-US')}`;
-        give_sumRef.current.textContent = `$${g_sum.toLocaleString('en-US')}`;
-        grow_sumRef.current.textContent = `$${gr_sum.toLocaleString('en-US')}`;
-        owe_sumRef.current.textContent = `$${o_sum.toLocaleString('en-US')}`;
-        total_expenses_numRef.current.textContent = `$${(l_sum + g_sum + gr_sum + o_sum).toLocaleString('en-US')}`;
-        income_inputRef.current.value = income_value;
-    
+        //Update Pie Chart
+        //setExpenseTotal(live_sum + give_sum + grow_sum + owe_sum);
       };
+
       useEffect(() => {
         updateSession();
       }, []);
 
-      
-    let enterPressed = false;
-    // add $ sign to beginning of input
-    let handleIncomeInput = (event) => {
-        if (event.target.value.charAt(0) !== '$') {
-          setIncomeValue('$' + event.target.value);
-        }
+    let handleIncomeInputFocus = () => {
+        income_inputRef.current.value = incomeValue;
       };
-    
+
+
+
       let handleIncomeKeyPress = (event) => {
-        if (event.key === 'Enter' && parseInt(incomeValue.replace(/[^0-9.]/g, '')) > -1) {
-          event.preventDefault();
-          let strg = '$' + parseInt(incomeValue.replace(/[^0-9.]/g, '')).toLocaleString('en-US');
-          setIncomeValue(strg);
-          sessionStorage.setItem("income_value", strg);
-          incomeInput();
-        }
+          
+          if(event.charCode == 46) // check for decimal
+          {
+              if (event.target.value.indexOf('.') === -1) {                 
+                  
+              }else {
+                  event.preventDefault();
+              }
+          }else if(event.charCode == 13) { //check for Enter
+              event.preventDefault();
+              event.currentTarget.blur(); // further calls the handleIncomeFocus() function --> updates income calculations
+              
+          }else{ //check for number only input
+              if (( event.charCode > 31) && 
+              (event.charCode < 48 || event.charCode > 57)){
+                event.preventDefault();
+              }
+
+              if (event.target.value.search(/\./) != -1 && event.target.value.split('.')[1].length == 2) //check for only two decimals
+              {
+                event.preventDefault();
+              } 
+          }
+          
       };
     
       let handleIncomeFocusOut = () => {
-        if (parseInt(incomeValue.replace(/[^0-9.]/g, '')) > -1) {
-          let strg = '$' + parseInt(incomeValue.replace(/[^0-9.]/g, '')).toLocaleString('en-US');
-          setIncomeValue(strg);
-          sessionStorage.setItem("income_value", strg);
+
+        if(incomeValue !== '')
+        {
+          console.log(income_inputRef.current.value);
+          sessionStorage.setItem("income_value", income_inputRef.current.value);
+              
           incomeInput();
+          income_inputRef.current.value = '$' + parseFloat(incomeValue).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
         }
       };
-    
+
       let incomeInput = () => {
-        let income_int = (incomeValue || '').replace(/[^0-9.]/g, '');
 
-        taxValue = calcTax(income_int);
-
-        i_sum = income_int - (income_int * taxValue);
-        let strg = '$' + i_sum.toLocaleString('en-US');
-        after_tax_numRef.value = strg;
-        enterPressed = false;
+        let i_margin = incomeValue - (incomeValue * calcTax(incomeValue));
+        setAfterTaxNum(i_margin);
         
-        animateBar(i_sum, parseInt(sessionStorage.getItem("giveTotal") || 0), parseInt(sessionStorage.getItem("liveTotal") || 0), parseInt(sessionStorage.getItem("growTotal") || 0), parseInt(sessionStorage.getItem("oweTotal") || 0));
-
-        if (i_sum === income_int - (income_int * taxValue)) {
-            after_taxRef.current.style.visibility = "visible";
-            after_taxRef.current.style.opacity = "1";
-            after_tax_numRef.current.textContent = `${(after_tax_numRef.value).toLocaleString('en-US')}`;
-        }
+        animateBar(i_margin, live_sum, give_sum, grow_sum, owe_sum);
         
       };
 
@@ -169,10 +147,10 @@ function Summary() {
             updateSession();
           }, []);
           
-        function animateBar(i_sum, l_sum, g_sum, gr_sum, o_sum) {
+        function animateBar(i_margin, l_sum, g_sum, gr_sum, o_sum) {
                 let progressValue = (progressValueRef || '').current;
                 let circularProgress =  (circularProgressRef || '').current;
-                let marginValue = i_sum - l_sum - g_sum - gr_sum - o_sum;
+                let marginValue = i_margin - l_sum - g_sum - gr_sum - o_sum;
             
                 let fontSize = 40; //Handles font size if number gets too large
                 let tmp = marginValue.toString().length;
@@ -191,7 +169,7 @@ function Summary() {
                 }
             
                 let progressStart = 0;
-                let progressEnd = (marginValue / i_sum) * 100;
+                let progressEnd = (marginValue / i_margin) * 100;
                 let speed = 20;
             
                 if (100 - progressEnd < 1 && 100 - progressEnd > 0) {
@@ -202,7 +180,7 @@ function Summary() {
             
                 if (marginValue <= 0) {
                 progressStart = 0;
-                progressValue.textContent = "$" + marginValue.toLocaleString("en-US");
+                progressValue.textContent = "$" + marginValue.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
                 (circularProgress || '').style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`;
                 } else {
                 let progress = setInterval(() => {
@@ -212,7 +190,7 @@ function Summary() {
                     if (marginCount >= marginValue) {
                     marginCount = marginValue;
                     }
-                    progressValue.textContent = '$' + marginCount.toLocaleString("en-US");
+                    progressValue.textContent = '$' + marginCount.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
                     (circularProgress || '').style.background = `conic-gradient(darkgoldenrod ${progressStart * 3.6}deg, #ededed 0deg)`; /*multiply by 3.6 as 1% of 360 = 3.6 --> dont change*/
             
                     if (progressStart >= progressEnd) {
@@ -224,19 +202,15 @@ function Summary() {
 
             
             let [chart, setChart] = useState(null);
-            let [expenseTotal, setExpenseTotal] = useState("");
+            let [expenseTotal, setExpenseTotal] = useState(live_sum + give_sum + grow_sum + owe_sum);
             let chartSectionRef = useRef(null);
             let canvasRef = useRef(null);
             let chartErrorRef = useRef(null);
             let chartDisplayed = false;
     
             let displayChart = () => {
-                let l_sum = parseInt(sessionStorage.getItem("liveTotal") || 0);
-                let g_sum = parseInt(sessionStorage.getItem("giveTotal") || 0);
-                let gr_sum = parseInt(sessionStorage.getItem("growTotal") || 0);
-                let o_sum = parseInt(sessionStorage.getItem("oweTotal") || 0);
 
-                let yValues = [l_sum, g_sum, gr_sum, o_sum];
+                let yValues = [live_sum, give_sum, grow_sum, owe_sum];
                 let xValues = ["Live", "Give", "Grow", "Owe"];
 
                 let barColors = [
@@ -363,6 +337,7 @@ function Summary() {
               }
             });
           }, []);
+
                 
     return (
 
@@ -390,12 +365,24 @@ function Summary() {
                                 <span className="progress-value" id="progress_value" ref={progressValueRef}>$0</span>
                             </div>
                             <span className="income-text">Income Margin</span>
-                            <input type="text" id="income_inputRef" onChange={(event) => setIncomeValue(event.target.value)} ref={income_inputRef} defaultValue={incomeValue} onFocus={handleIncomeInput} onKeyPress={handleIncomeKeyPress} onBlur={handleIncomeFocusOut} placeholder="Enter monthly income" /> 
-                            <div id="after_tax" ref={after_taxRef}>
-                                <h1 id="after_tax_h1">Income After Tax: <span id="after_tax_num" ref={after_tax_numRef}></span></h1>
+
+                            <input 
+                            type="text" 
+                            id="income_inputRef"
+                            onChange={(event) => setIncomeValue(event.target.value)}
+                            ref={income_inputRef} 
+                            defaultValue={incomeValue !== '' ? "$" + parseFloat(incomeValue).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2}) : incomeValue} 
+                            onFocus={handleIncomeInputFocus} 
+                            onKeyPress={handleIncomeKeyPress} 
+                            onBlur={handleIncomeFocusOut} 
+                            placeholder="Enter monthly income" 
+                            /> 
+
+                            <div id="after_tax" ref={after_tax_divRef}>
+                                <h1 id="after_tax_h1">Income After Tax: <span id="after_tax_num" >${afterTaxNum.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</span></h1>
                             </div>
                             <div id="total_expenses">
-                                <h1 id="total_expenses_h1">Total Expenses: <span id="total_expenses_num" ref={total_expenses_numRef}></span></h1>
+                                <h1 id="total_expenses_h1">Total Expenses: <span id="total_expenses_num"> ${(live_sum + give_sum + grow_sum + owe_sum).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</span></h1>
                             </div>
                         </div>
                     </section>
@@ -404,21 +391,21 @@ function Summary() {
                     <section className="finance-bar">
                         <div id="live_bar" className="shiny finance-num" ref={live_barRef}>
                             <h1>Live</h1>
-                            <h2 ref={live_sumRef}>${live_sum.toLocaleString('en-US')}</h2>
+                            <h2 ref={live_sumRef}>${live_sum.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</h2>
                         </div>
                     </section>
 
                     <section className="finance-bar">
                         <div id="give_bar" className="shiny finance-num" ref={give_barRef}>
                             <h1>Give</h1>
-                            <h2 ref={give_sumRef}>${give_sum.toLocaleString('en-US')}</h2>
+                            <h2 ref={give_sumRef}>${give_sum.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</h2>
                         </div>
                     </section>
 
                     <section className="finance-bar">
                         <div id="grow_bar" className="shiny finance-num" ref={grow_barRef}>
                             <h1>Grow</h1>
-                            <h2 ref={grow_sumRef}>${grow_sum.toLocaleString('en-US')}</h2>
+                            <h2 ref={grow_sumRef}>${grow_sum.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</h2>
                         </div>
                     </section>
 
@@ -427,7 +414,7 @@ function Summary() {
                     <section className="finance-bar">
                         <div id="owe_bar" className="shiny finance-num" ref={owe_barRef}>
                             <h1>Owe</h1>    
-                            <h2 ref={owe_sumRef}>${owe_sum.toLocaleString('en-US')}</h2>    
+                            <h2 ref={owe_sumRef}>${owe_sum.toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2})}</h2>    
                         </div>
                     </section>
                 </section>
