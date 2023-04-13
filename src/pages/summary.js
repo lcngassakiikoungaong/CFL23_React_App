@@ -3,7 +3,6 @@ import Chart from "chart.js/auto";
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import "../css/summary.css";
-import { renderIntoDocument } from "react-dom/test-utils";
 
 function Summary() {
     //Finance bar DOM container
@@ -74,14 +73,14 @@ function Summary() {
 
       let handleIncomeKeyPress = (event) => {
           
-          if(event.charCode == 46) // check for decimal
+          if(event.charCode === 46) // check for decimal
           {
               if (event.target.value.indexOf('.') === -1) {                 
                   
               }else {
                   event.preventDefault();
               }
-          }else if(event.charCode == 13) { //check for Enter
+          }else if(event.charCode === 13) { //check for Enter
               event.preventDefault();
               event.currentTarget.blur(); // further calls the handleIncomeFocus() function --> updates income calculations
               
@@ -91,28 +90,32 @@ function Summary() {
                 event.preventDefault();
               }
 
-              if (event.target.value.search(/\./) != -1 && event.target.value.split('.')[1].length == 2) //check for only two decimals
+              let searchVal = event.target.value.search(/\./);
+              if (searchVal !== -1 && event.target.selectionStart > searchVal && event.target.value.split('.')[1].length === 2) //check for only two decimals
               {
                 event.preventDefault();
-              } 
+              }
           }
           
       };
     
       let handleIncomeFocusOut = () => {
+        
 
         if(incomeValue !== '')
         {
-          console.log(income_inputRef.current.value);
           sessionStorage.setItem("income_value", income_inputRef.current.value);
               
           incomeInput();
           income_inputRef.current.value = '$' + parseFloat(incomeValue).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
+        }else{
+          setIncomeValue('');
+          sessionStorage.setItem("income_value", income_inputRef.current.value);
+          incomeInput();
         }
       };
 
       let incomeInput = () => {
-
         let i_margin = incomeValue - (incomeValue * calcTax(incomeValue));
         setAfterTaxNum(i_margin);
         

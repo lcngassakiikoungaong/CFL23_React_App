@@ -110,9 +110,9 @@ p {
   border-color: darkgoldenrod;
 }
 
-#after_tax{ /*There is a functionality here to animate a fade in display where you set the visibility to hidden, (then set to visible and set opacity to 1 in js)*/
+#after_tax{ /*There is a functionality here to animate a fade in display where you set the visibility to hidden & opacity to 0, (then set to visible and set opacity to 1 in js)*/
   visibility: visible;
-  opacity: 0;
+  opacity: 1;
   transition: visibility 0s, opacity 0.5s linear;
 }
 
