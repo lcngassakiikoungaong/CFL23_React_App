@@ -1,20 +1,16 @@
-import React  from "react";
+import React, { Component } from "react";
 import "../css/shared_css/navbar.css";
 import { Link } from 'react-router-dom';
 
 
-let navLinks = document.getElementById("navLinks");
+class Navbar extends Component {
+    state = {clicked: false};
 
-function showMenu() {
-    navLinks.style.right = "0";
-}
+    handleCLick = () => {
+        this.setState({clicked: !this.state.clicked})
+    }
 
-function hideMenu() {
-    navLinks.style.right = "-200px";
-}
-
-function Navbar() {
-
+    render() {
     return (
         <>
         <head>
@@ -30,10 +26,8 @@ function Navbar() {
             />
         </head>
         <nav>
-            <Link href="/summary"><img src=""/></Link>
             <div className="nav-links" id="navLinks">
-                <i className="fa-solid fa-square-xmark"></i>
-                <ul>
+                <ul id="navbar" className={this.state.clicked ? "#navbar active" : "#navbar"}>
                     <li><Link to="/summary" id="homeNav">SUMMARY</Link></li>
                     <li><Link to="/live" id="liveNav">LIVE</Link></li>
                     <li><Link to="/give" id="giveNav">GIVE</Link></li>
@@ -41,11 +35,14 @@ function Navbar() {
                     <li><Link to="/owe" id="oweNav">OWE</Link></li>
                     <li><Link to="/about" id="homeNav">ABOUT</Link></li>
                 </ul>
-                <i className="fa-solid fa-bars"></i>
+            </div>
+            <div id="menu" onClick={this.handleCLick}>
+                <i id="bars" className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
             </div>
         </nav>
         </>
     );
+}
 }
 
 export default Navbar
