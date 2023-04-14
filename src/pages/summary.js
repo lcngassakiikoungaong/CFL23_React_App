@@ -317,36 +317,35 @@ function Summary() {
 
         function animateChart()
         {
-          let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          if(window.location.pathname !== "/summary"){
+            
+            window.removeEventListener("scroll", animateChart); // if user moves off page, delete listener
           
-              let canvas = (canvasRef || '').current;
-              let chartError = (chartErrorRef || '').current;
+          }else{
+            
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
           
-              if (chartDisplayed && scrollTop < 200) {
-                chartDisplayed = false;
-                canvas.style.opacity = 0;
-                canvas.style.transition = "opacity 0.5s ease-in-out";
-              }
-          
-              if (!chartDisplayed && scrollTop >= 200) {
-                chartDisplayed = true;
-                canvas.style.opacity = 1;
-                canvas.style.transition = "opacity 0.5s ease-in-out";
-                displayChart();
-              }
-        }
-
-        function destroyListener()
-        {
-          if(window.location.pathname !== "/summary")
-            {
-              window.removeEventListener("scroll", animateChart);
-              window.removeEventListener("scroll", destroyListener);
+            let canvas = (canvasRef || '').current;
+            let chartError = (chartErrorRef || '').current;
+        
+            if (chartDisplayed && scrollTop < 200) {
+              chartDisplayed = false;
+              canvas.style.opacity = 0;
+              canvas.style.transition = "opacity 0.5s ease-in-out";
             }
+        
+            if (!chartDisplayed && scrollTop >= 200) {
+              chartDisplayed = true;
+              canvas.style.opacity = 1;
+              canvas.style.transition = "opacity 0.5s ease-in-out";
+              displayChart();
+            }
+          }
+          
         }
+            
         useEffect(() => {
           window.addEventListener("scroll", animateChart);
-          window.addEventListener("scroll", destroyListener);
           }, []);
 
                 
