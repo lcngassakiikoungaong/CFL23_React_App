@@ -9,47 +9,72 @@ import "../css/owe.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Owe() {
-        let [total, setTotal] = useState(parseInt(sessionStorage.getItem("oweTotal") || 0));
+        let [total, setTotal] = useState(parseFloat(sessionStorage.getItem("oweTotal") || 0));
         let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("oweTableRows")) || []);
     
         let onAddWebsite = (e) => {
-        e.preventDefault();
-        let cate = e.target.elements.Category.value;
-        let prdr = e.target.elements.Purchase.value;
-        let date = e.target.elements.Date.value;
-        let amnt = e.target.elements.Amount.value;
-    
-        if (amnt.charAt(0) !== '$') {
-            amnt = '$' + amnt;
-        }
-    
-        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
-    
-        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-        sessionStorage.setItem("oweTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-    
-        setRows([...rows, { cate, prdr, date, amnt }]);
-    
-        sessionStorage.setItem("oweTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
+            e.preventDefault();
+            let cate = e.target.elements.Category.value;
+            let prdr = e.target.elements.Purchase.value;
+            let date = e.target.elements.Date.value;
+            let amnt = e.target.elements.Amount.value;
+        
+            let formatAmnt = '$' + parseFloat(amnt).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
+            
+            setTotal(parseFloat(total) + parseFloat(amnt));
+            sessionStorage.setItem("oweTotal", parseFloat(total) + parseFloat(amnt));
+        
+            setRows([...rows, { cate, prdr, date, formatAmnt }]);
+            sessionStorage.setItem("oweTableRows", JSON.stringify([...rows, { cate, prdr, date, formatAmnt }]));
         };
     
         let onDeleteRow = (index) => {
-        let rowToDelete = rows[index];
-        let amntToDelete = rowToDelete.amnt;
-        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-        sessionStorage.setItem("oweTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-    
-        let updatedRows = rows.filter((_, i) => i !== index);
-        setRows(updatedRows);
-        sessionStorage.setItem("oweTableRows", JSON.stringify(updatedRows));
-        };
+            let rowToDelete = rows[index];
+            let amntToDelete = rowToDelete.formatAmnt;
 
+            amntToDelete = amntToDelete.replace(/[$]|[,]/g, '');
+            setTotal(parseFloat(total) - parseFloat(amntToDelete));
+            sessionStorage.setItem("oweTotal", parseFloat(total) - parseFloat(amntToDelete));
+        
+            let updatedRows = rows.filter((_, i) => i !== index);
+            setRows(updatedRows);
+            sessionStorage.setItem("oweTableRows", JSON.stringify(updatedRows));
+        };
 
         let [category, setCategory] = useState('');
 
         let handleCategoryChange = (event) => {
             setCategory(event.target.value);
         };
+
+        let handleIncomeKeyPress = (event) => {
+          
+            if(event.charCode === 46) // check for decimal
+            {
+                if (event.target.value.indexOf('.') === -1) {                 
+                    
+                }else {
+                    event.preventDefault();
+                }
+            }else if(event.charCode === 13) { //check for Enter
+                
+                //allow submission of the form
+
+            }else{ //check for number only input
+                if (( event.charCode > 31) && 
+                (event.charCode < 48 || event.charCode > 57)){
+                  event.preventDefault();
+                }
+  
+                let searchVal = event.target.value.search(/\./);
+                if (searchVal !== -1 && event.target.selectionStart > searchVal && event.target.value.split('.')[1].length === 2) //check for only two decimals
+                {
+                  event.preventDefault();
+                }
+            }
+            
+        };
+        
   return (
     <>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -125,6 +150,7 @@ function Owe() {
                             className="amountInput"
                             data-type="currency"
                             placeholder="Enter the amount"
+                            onKeyPress={handleIncomeKeyPress}
                             name="Amount"
                             required />
                         </div>
@@ -153,7 +179,7 @@ function Owe() {
                         <td>{row.cate}</td>
                         <td>{row.prdr}</td>
                         <td>{row.date}</td>
-                        <td>{row.amnt}</td>
+                        <td>{row.formatAmnt}</td>
                         <td><button onClick={() => onDeleteRow(index)}>Delete</button></td>
                         </tr>
                     ))}

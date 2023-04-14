@@ -9,39 +9,36 @@ import "../css/give.css";
 /*eslint-disable jsx-a11y/anchor-is-valid*/
 
 function Give() {
-  let [total, setTotal] = useState(parseInt(sessionStorage.getItem("giveTotal") || 0));
-        let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("giveTableRows")) || []);
+  let [total, setTotal] = useState(parseFloat(sessionStorage.getItem("giveTotal") || 0));
+  let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("giveTableRows")) || []);
     
         let onAddWebsite = (e) => {
-        e.preventDefault();
-        let cate = e.target.elements.Category.value;
-        let prdr = e.target.elements.Purchase.value;
-        let date = e.target.elements.Date.value;
-        let amnt = e.target.elements.Amount.value;
-    
-        if (amnt.charAt(0) !== '$') {
-            amnt = '$' + amnt;
-        }
-    
-        let newAmnt = '$' + parseInt(amnt.replace(/[$]|[,]/g, '')).toLocaleString('en-US');
-    
-        setTotal(total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-        sessionStorage.setItem("giveTotal", total + parseInt(newAmnt.replace(/[$]|[,]/g, '')));
-    
-        setRows([...rows, { cate, prdr, date, amnt }]);
-    
-        sessionStorage.setItem("giveTableRows", JSON.stringify([...rows, { cate, prdr, date, amnt }]));
+           e.preventDefault();
+            let cate = e.target.elements.Category.value;
+            let prdr = e.target.elements.Purchase.value;
+            let date = e.target.elements.Date.value;
+            let amnt = e.target.elements.Amount.value;
+        
+            let formatAmnt = '$' + parseFloat(amnt).toLocaleString('en-US', {'minimumFractionDigits':2,'maximumFractionDigits':2});
+            
+            setTotal(parseFloat(total) + parseFloat(amnt));
+            sessionStorage.setItem("giveTotal", parseFloat(total) + parseFloat(amnt));
+        
+            setRows([...rows, { cate, prdr, date, formatAmnt }]);
+            sessionStorage.setItem("giveTableRows", JSON.stringify([...rows, { cate, prdr, date, formatAmnt }]));
         };
     
         let onDeleteRow = (index) => {
-        let rowToDelete = rows[index];
-        let amntToDelete = rowToDelete.amnt;
-        setTotal(total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-        sessionStorage.setItem("giveTotal", total - parseInt(amntToDelete.replace(/[$]|[,]/g, '')));
-    
-        let updatedRows = rows.filter((_, i) => i !== index);
-        setRows(updatedRows);
-        sessionStorage.setItem("giveTableRows", JSON.stringify(updatedRows));
+            let rowToDelete = rows[index];
+            let amntToDelete = rowToDelete.formatAmnt;
+
+            amntToDelete = amntToDelete.replace(/[$]|[,]/g, '');
+            setTotal(parseFloat(total) - parseFloat(amntToDelete));
+            sessionStorage.setItem("giveTotal", parseFloat(total) - parseFloat(amntToDelete));
+        
+            let updatedRows = rows.filter((_, i) => i !== index);
+            setRows(updatedRows);
+            sessionStorage.setItem("giveTableRows", JSON.stringify(updatedRows));
         };
 
         let [category, setCategory] = useState('');
@@ -49,6 +46,35 @@ function Give() {
         let handleCategoryChange = (event) => {
             setCategory(event.target.value);
         };
+
+        let handleIncomeKeyPress = (event) => {
+          
+            if(event.charCode === 46) // check for decimal
+            {
+                if (event.target.value.indexOf('.') === -1) {                 
+                    
+                }else {
+                    event.preventDefault();
+                }
+            }else if(event.charCode === 13) { //check for Enter
+                
+                //allow submission of the form
+
+            }else{ //check for number only input
+                if (( event.charCode > 31) && 
+                (event.charCode < 48 || event.charCode > 57)){
+                  event.preventDefault();
+                }
+  
+                let searchVal = event.target.value.search(/\./);
+                if (searchVal !== -1 && event.target.selectionStart > searchVal && event.target.value.split('.')[1].length === 2) //check for only two decimals
+                {
+                  event.preventDefault();
+                }
+            }
+            
+        };
+
 return (
     <>
         <link
@@ -108,8 +134,15 @@ return (
       
             <div className="input-box">
               <span className="details">Amount</span>
-              <input type="text" id="AmountInput" className="amountInput" data-type="currency"
-                placeholder="Enter the amount" name="Amount" required />
+              <input 
+              type="text" 
+              id="AmountInput" 
+              className="amountInput" 
+              data-type="currency"
+              onKeyPress={handleIncomeKeyPress}
+              placeholder="Enter the amount" 
+              name="Amount" 
+              required />
             </div>
           </div>
           <div className="button">
@@ -136,7 +169,7 @@ return (
                         <td>{row.cate}</td>
                         <td>{row.prdr}</td>
                         <td>{row.date}</td>
-                        <td>{row.amnt}</td>
+                        <td>{row.formatAmnt}</td>
                         <td><button onClick={() => onDeleteRow(index)}>Delete</button></td>
                         </tr>
                     ))}
