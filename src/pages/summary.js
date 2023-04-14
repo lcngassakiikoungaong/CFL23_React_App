@@ -314,14 +314,10 @@ function Summary() {
                 }); 
             }
         }
-       
-          useEffect(() => {
-            displayChart();
-          },[]);
 
-        useEffect(() => {
-            window.addEventListener("scroll", function() {
-              let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        function animateChart()
+        {
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
           
               let canvas = (canvasRef || '').current;
               let chartError = (chartErrorRef || '').current;
@@ -338,7 +334,19 @@ function Summary() {
                 canvas.style.transition = "opacity 0.5s ease-in-out";
                 displayChart();
               }
-            });
+        }
+
+        function destroyListener()
+        {
+          if(window.location.pathname !== "/summary")
+            {
+              window.removeEventListener("scroll", animateChart);
+              window.removeEventListener("scroll", destroyListener);
+            }
+        }
+        useEffect(() => {
+          window.addEventListener("scroll", animateChart);
+          window.addEventListener("scroll", destroyListener);
           }, []);
 
                 
