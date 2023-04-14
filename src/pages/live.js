@@ -13,6 +13,12 @@ function Live() {
         let [total, setTotal] = useState(parseFloat(sessionStorage.getItem("liveTotal") || 0));
         let [rows, setRows] = useState(JSON.parse(sessionStorage.getItem("liveTableRows")) || []);
     
+         const [isMobile] = useState(window.innerWidth <= 480);
+    
+    const descriptionHeader = isMobile ? "Desc." : "Description";
+    const amntHeader = isMobile ? "Amnt." : "Amount";
+
+
         let onAddWebsite = (e) => {
             e.preventDefault();
             let cate = e.target.elements.Category.value;
@@ -173,9 +179,9 @@ return (
                 <thead>
                 <tr>
                     <th>Category</th>
-                    <th>Description</th>
+                    <th>{descriptionHeader}</th>
                     <th>Date</th>
-                    <th>Amount</th>
+                    <th>{amntHeader}</th>
                     <th>Action</th>
                 </tr>
                 </thead>
