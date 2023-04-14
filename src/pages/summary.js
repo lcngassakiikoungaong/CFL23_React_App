@@ -34,19 +34,19 @@ function Summary() {
     /** Links to other pages ***/
     useEffect(() => {
         live_barRef.current.addEventListener('click', () => {
-        window.location.href = "/live#form-header";
+            window.location.href = "/live#form-header";
         });
 
         give_barRef.current.addEventListener('click', () => {
-        window.location.href = "/give#form-header";
+            window.location.href = "/give#form-header";
         });
 
         grow_barRef.current.addEventListener('click', () => {
-        window.location.href = "/grow#form-header";
+            window.location.href = "/grow#form-header";
         });
 
         owe_barRef.current.addEventListener('click', () => {
-        window.location.href = "/owe#form-header";
+            window.location.href = "/owe#form-header";
         });
     }, [live_barRef, give_barRef, grow_barRef, owe_barRef]);
 
@@ -123,28 +123,28 @@ function Summary() {
         
       };
 
-        //calculate tax off of the income value entered
-        function calcTax(input_value = '') {
-            /* Tax brackets is for single filers only in the US */
-            let taxValue = 0;
-            if (input_value > 0 && input_value <= 10275) {
-              taxValue = 0.1;
-            } else if (input_value > 10275 && input_value <= 41775) {
-              taxValue = 0.12;
-            } else if (input_value > 41775 && input_value <= 89075) {
-              taxValue = 0.22;
-            } else if (input_value > 89075 && input_value <= 170050) {
-              taxValue = 0.24;
-            } else if (input_value > 170050 && input_value <= 215950) {
-              taxValue = 0.32;
-            } else if (input_value > 215950 && input_value <= 539900) {
-              taxValue = 0.35;
-            } else if (input_value > 539900) {
-              taxValue = 0.37;
-            }
-          
-            return taxValue;
-          }
+    //calculate tax off of the income value entered
+    function calcTax(input_value = '') {
+        /* Tax brackets is for single filers only in the US */
+        let taxValue = 0;
+        if (input_value > 0 && input_value <= 10275) {
+            taxValue = 0.1;
+        } else if (input_value > 10275 && input_value <= 41775) {
+            taxValue = 0.12;
+        } else if (input_value > 41775 && input_value <= 89075) {
+            taxValue = 0.22;
+        } else if (input_value > 89075 && input_value <= 170050) {
+            taxValue = 0.24;
+        } else if (input_value > 170050 && input_value <= 215950) {
+            taxValue = 0.32;
+        } else if (input_value > 215950 && input_value <= 539900) {
+            taxValue = 0.35;
+        } else if (input_value > 539900) {
+            taxValue = 0.37;
+        }
+
+        return taxValue;
+    }
 
           useEffect(() => {
             updateSession();
@@ -352,22 +352,22 @@ function Summary() {
     return (
 
         <>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
-                    rel="stylesheet"
-                />
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-                />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+                rel="stylesheet"
+            />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            />
 
-                <section className='headersm'>
-                    <Navbar></Navbar>
+            <section className='headersm'>
+                <Navbar></Navbar>
 
-                    <div id="summary_head">
-                        <h1>Income Summary</h1>
-                    </div>
+                <div id="summary_head">
+                    <h1>Income Summary</h1>
+                </div>
 
                     <section className="progress-section" id="progress_bar">
                         <div className="progress-container">

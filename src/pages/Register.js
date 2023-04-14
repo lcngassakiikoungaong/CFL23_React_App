@@ -31,19 +31,19 @@ function Register() {
     const handleConfirmPasswordChange = (event) => {
         setConfirmPassword(event.target.value);
     };
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {
-        setErrorMessage("Passwords do not match");
-        return;
+            setErrorMessage("Passwords do not match");
+            return;
         }
         // Submit registration form data to backend API
     };
 
-  return (
+    return (
         <>
-          
+
             <meta charSet="UTF-8" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,77 +52,77 @@ function Register() {
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet" />
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-                
+
 
             <section className="container">
                 <div className="form login">
-                    <div className="form-content">  
-                        <header>Register</header> 
-                                <form action="#">
-                                <div className="field input-field">
-                                    <input
+                    <div className="form-content">
+                        <header>Register</header>
+                        <form action="#">
+                            <div className="field input-field">
+                                <input
                                     type="text"
                                     placeholder="First Name"
                                     className="input"
                                     value={firstName}
                                     onChange={handleFirstNameChange}
                                     required
-                                    />
-                                </div>
-                                <div className="field input-field">
-                                    <input
+                                />
+                            </div>
+                            <div className="field input-field">
+                                <input
                                     type="text"
                                     placeholder="Last Name"
                                     className="input"
                                     value={lastName}
                                     onChange={handleLastNameChange}
                                     required
-                                    />
-                                </div>
-                                <div className="field input-field">
-                                    <input
+                                />
+                            </div>
+                            <div className="field input-field">
+                                <input
                                     type="email"
                                     placeholder="Email"
                                     className="input"
                                     value={email}
                                     onChange={handleEmailChange}
                                     required
-                                    />
-                                </div>
-                                <div className="field input-field">
-                                    <input
+                                />
+                            </div>
+                            <div className="field input-field">
+                                <input
                                     type="password"
                                     placeholder="Password"
                                     className="password"
                                     value={password}
                                     onChange={handlePasswordChange}
                                     required
-                                    />
-                                </div>
-                                <div className="field input-field">
-                                    <input
+                                />
+                            </div>
+                            <div className="field input-field">
+                                <input
                                     type="password"
                                     placeholder="Confirm Password"
                                     className="password"
                                     value={confirmPassword}
                                     onChange={handleConfirmPasswordChange}
                                     required
-                                    />
-                                    <i className="bx bx-hide eye-icon"></i>
-                                </div>
-                                <div className="field button-field">
-                                    <NavLink to="./summary" type="submit"><button type="button">Register</button></NavLink>
-                                </div>
-
-                                <div className="form-link">
-                                <span>Already have an account? <Link to="/"className="link login-link">Login</Link></span>
-                                </div>
-                                </form>
+                                />
+                                <i className="bx bx-hide eye-icon"></i>
                             </div>
-                        </div>
+                            <div className="field button-field">
+                                <NavLink to="/summary" type="submit"><button type="button">Register</button></NavLink>
+                            </div>
+
+                            <div className="form-link">
+                                <span>Already have an account? <Link to="/" className="link login-link">Login</Link></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </section>
         </>
-  );
+    );
 }
 
 export default Register;

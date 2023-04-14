@@ -94,19 +94,19 @@ return (
                   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
               />
 
-              <section className='headerlv'>
-                  <Navbar></Navbar>
+            <section className='headerlv'>
+                <Navbar></Navbar>
 
-                  <div className="text-box">
-                      <h1>Live</h1>
-                      <hr />
-                      <p>What is Your Cost of Living?</p>
-                      <a href="#form-header" className="hero-btn" id="libertyBtn"
-                      >Click here to enter your expenses</a>
-                  </div>
-              </section>
+                <div className="text-box">
+                    <h1>Live</h1>
+                    <hr />
+                    <p>What is Your Cost of Living?</p>
+                    <a href="#form-header" className="hero-btn" id="libertyBtn"
+                    >Click here to enter your expenses</a>
+                </div>
+            </section>
 
-              <section>
+            <section>
                 <h1 id="form-header" className="form-header">Enter your Expenses</h1>
                 <div className="containerL" id='containerL'>
                     <form action="#" method="POST" onSubmit={onAddWebsite}>
@@ -199,15 +199,15 @@ return (
                 </table>
             </section>
 
-              <section className="summary-link">
-                  <a href="/summary" className="hero-btn gold-btn" id="LibertyBtn">
-                      Back to Summary
-                  </a>
-              </section>
+            <section className="summary-link">
+                <a href="/summary" className="hero-btn gold-btn" id="LibertyBtn">
+                    Back to Summary
+                </a>
+            </section>
 
-              <Footer></Footer>
-    </>
+            <Footer></Footer>
+        </>
     );
 }
-        
+
 export default Live;

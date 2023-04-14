@@ -78,27 +78,27 @@ function Grow() {
 
 return (
     <>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-        />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      />
 
-        <section className='headergr'>
-          <Navbar></Navbar>
+      <section className='headergr'>
+        <Navbar></Navbar>
 
-          <div className="text-box">
-            <h1>Grow</h1>
-            <hr />
-            <p>How much are you saving for emergencies or retirement?</p>
-            <a href="#form-header" className="hero-btn" id="libertyBtn"
-            >Click here to enter your investments</a>
-          </div>
-        </section>
+        <div className="text-box">
+          <h1>Grow</h1>
+          <hr />
+          <p>How much are you saving for emergencies or retirement?</p>
+          <a href="#form-header" className="hero-btn" id="libertyBtn"
+          >Click here to enter your investments</a>
+        </div>
+      </section>
 
         <section>
                 <h1 id="form-header" className="form-header">Enter your Expenses</h1>
@@ -186,7 +186,7 @@ return (
 
         <Footer></Footer>
     </>
-    );
+  );
 }
-        
+
 export default Grow;

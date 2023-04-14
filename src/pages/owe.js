@@ -77,24 +77,24 @@ function Owe() {
         
   return (
     <>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Live</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet" />
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Live</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
-        <section className="headerow">
-          <Navbar></Navbar>
-          <div className="text-box">
-            <h1>Owe</h1>
-            <hr />
-            <p>How much are you paying on debt and taxes?</p>
-            <a href="#form-header" className="hero-btn" id="libertyBtn"
-            >Click here to enter your debt</a>
+      <section className="headerow">
+        <Navbar></Navbar>
+        <div className="text-box">
+          <h1>Owe</h1>
+          <hr />
+          <p>How much are you paying on debt and taxes?</p>
+          <a href="#form-header" className="hero-btn" id="libertyBtn"
+          >Click here to enter your debt</a>
 
-          </div>
-        </section>
+        </div>
+      </section>
 
         <section>
                 <h1 id="form-header" className="form-header">Enter your Expenses</h1>
@@ -162,7 +162,7 @@ function Owe() {
                 </div>
             </section>
 
-        <section>
+      <section>
         <table id="tbl" className="table">
                 <thead>
                 <tr>
@@ -187,15 +187,15 @@ function Owe() {
                 </table>
         </section>
 
-        <section className="summary-link">
-          <a href="/summary" className="hero-btn gold-btn" id="LibertyBtn">
-            Back to Summary
-          </a>
-        </section>
+      <section className="summary-link">
+        <a href="/summary" className="hero-btn gold-btn" id="LibertyBtn">
+          Back to Summary
+        </a>
+      </section>
 
-        <Footer></Footer>
+      <Footer></Footer>
     </>
-    );
+  );
 }
-        
+
 export default Owe;

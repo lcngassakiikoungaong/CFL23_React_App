@@ -14,18 +14,22 @@ html {
   position: relative;
 }
 
+nav .fa-solid {
+  display: none;
+}
+
 /* Text Styling */
 
-#summary_head{
+#summary_head {
   color: white;
   text-align: center;
   padding-bottom: 30px;
 }
 
-#breakdown_head{
-    color: black;
-    text-align: center;
-    padding: 15px;
+#breakdown_head {
+  color: black;
+  text-align: center;
+  padding: 15px;
 }
 
 h1 {
@@ -43,13 +47,13 @@ p {
 
 
 /*************PROGRESS BAR SECTION ************/
-.progress-section{
+.progress-section {
   display: flex;
-  align-items: center; 
-  justify-content: center;  
+  align-items: center;
+  justify-content: center;
 }
 
-.progress-container{
+.progress-container {
   display: flex;
   width: 420px;
   padding: 50px 0;
@@ -59,19 +63,19 @@ p {
   align-items: center;
 }
 
-.circular-progress{
+.circular-progress {
   position: relative;
   height: 250px;
   width: 250px;
   border-radius: 50%;
-  background: conic-gradient(darkgoldenrod 0deg, #ededed 0deg); 
+  background: conic-gradient(darkgoldenrod 0deg, #ededed 0deg);
   display: flex;
   align-items: center;
   justify-content: center;
 
 }
 
-.circular-progress::before{
+.circular-progress::before {
   content: "";
   position: absolute;
   height: 210px;
@@ -80,14 +84,14 @@ p {
   border-radius: 50%;
 }
 
-.progress-value{
+.progress-value {
   position: relative;
   font-size: 40px;
   font-weight: 600;
   color: darkgoldenrod;
 }
 
-.income-text{
+.income-text {
   padding: 15px;
   font-size: 30px;
   font-weight: 500;
@@ -116,21 +120,23 @@ p {
   transition: visibility 0s, opacity 0.5s linear;
 }
 
-#after_tax > h1, #total_expenses > h1{
+#after_tax>h1,
+#total_expenses>h1 {
   font-size: 20px;
 }
 
-#after_tax_num, #total_expenses_num{
+#after_tax_num,
+#total_expenses_num {
   color: goldenrod;
   font-weight: 800;
 }
 
-#total_expenses{
+#total_expenses {
   width: 100%;
   padding-left: 70px;
 }
 
-#after_tax{
+#after_tax {
   width: 100%;
   padding-top: 10px;
   padding-left: 70px;
@@ -146,7 +152,8 @@ p {
   padding-left: 20px;
   padding-right: 20px;
 }
-.finance-bar:last-child{
+
+.finance-bar:last-child {
   padding-bottom: 5%;
 }
 
@@ -158,14 +165,14 @@ p {
   background-color: #fff;
 }
 
-.finance-num > h1{
+.finance-num>h1 {
   text-align: left;
   padding-left: 2%;
   font-size: 35px;
   display: inline;
 }
 
-.finance-num > h2{
+.finance-num>h2 {
   float: right;
   font-size: 35px;
   display: inline;
@@ -173,7 +180,7 @@ p {
   color: orange;
 }
 
-.finance-container{
+.finance-container {
   border-radius: 10px;
   box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
   display: none;
@@ -187,9 +194,11 @@ p {
   0% {
     background-position: 1% 0%;
   }
+
   50% {
     background-position: 99% 100%;
   }
+
   100% {
     background-position: 1% 0%;
   }
@@ -257,13 +266,13 @@ p {
   text-align: left;
 }
 
-.filters details > summary {
+.filters details>summary {
   font-size: 20px;
   color: black;
   cursor: pointer;
 }
 
-.filters details > summary > * {
+.filters details>summary>* {
   display: inline;
   cursor: pointer;
 }
@@ -342,12 +351,11 @@ h3 {
 
 .button1:hover,
 .button2:hover {
-  background: rgba(
-    4,
-    59,
-    92,
-    0.7
-  ) !important; /* !important tag allows for hover effect to remain even if JS edits background color */
+  background: rgba(4,
+      59,
+      92,
+      0.7) !important;
+  /* !important tag allows for hover effect to remain even if JS edits background color */
   color: white !important;
   transition: 0.4s;
 }
@@ -387,6 +395,7 @@ h3 {
   margin: auto;
   text-align: center;
 }
+
 .pie-chart h1 {
   width: 80%;
   margin: auto;
@@ -457,11 +466,12 @@ h3 {
 }
 
 /* Allows columns to fit within an iphone view */
-@media(max-width: 700px)
-{
-    .row {
-        flex-direction: column;
-    }
+@media screen and (max-width: 700px) {
+
+  div,
+  .chartError {
+    margin: auto;
+  }
 }
 
 
@@ -501,3 +511,10 @@ h3 {
   color: green;
 }
 */
+.pie-header {
+  margin: auto;
+}
+
+#chartError{
+  margin: auto;
+}
