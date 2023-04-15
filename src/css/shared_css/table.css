@@ -32,7 +32,7 @@ td {
     background-color: lightgray;
  }
 
- .deleteBtn {
+ #deleteBtn {
     border-radius: 55px;
     background: gray;
     color: white;

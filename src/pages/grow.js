@@ -171,7 +171,7 @@ return (
                         <td>{row.prdr}</td>
                         <td>{row.date}</td>
                         <td>{row.formatAmnt}</td>
-                        <td><button onClick={() => onDeleteRow(index)}>Delete</button></td>
+                        <td><button id="deleteBtn" onClick={() => onDeleteRow(index)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>
