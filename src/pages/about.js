@@ -82,18 +82,19 @@ function About() {
                         <div>
                             <i className="fa-solid fa-home"></i>
                             <span>
-                                <h5>1971 University Blvd</h5>
+                                <h5>School of Business Room 3400C</h5>
                                 <p>Lynchburg, VA</p>
+                                <p>1971 University Blvd</p>
                             </span>
                         </div>
 
                         <div>
                             <i className="fa-solid fa-phone"></i>
                             <span>
-                                <h5>704-824-8789</h5>
+                                <h5>434-592-3210</h5>
                                 <p>
-                                    Monday - Saturday <br />
-                                    8am - 5pm
+                                    Monday - Friday <br />
+                                    8 am - 5 pm
                                 </p>
                             </span>
                         </div>
@@ -102,7 +103,7 @@ function About() {
                             <i className="fa-solid fa-envelope"></i>
                             <span>
                                 <h5>cfl@liberty.edu</h5>
-                                <p>Email us</p>
+                                <p>Email us!</p>
                             </span>
                         </div>
                     </div>

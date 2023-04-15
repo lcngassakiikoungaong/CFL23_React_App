@@ -40,7 +40,7 @@ function Footer() {
             <section className="footer">
                 <h4>About the Team</h4>
                 <p>
-                    In 2022 the CFL team built the web app to facilitate business students
+                    In 2023 the CFL team built the web app to facilitate business students
                     with their finances. The team is comprised of <br />
                     five members: Andrés Choque, Jonathan Wilson, Bailey Warren, Noha
                     Ngassaki, and William Donoho.
